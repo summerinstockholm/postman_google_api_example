@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "19c7d95d-f6ec-4809-85d4-f15b83af1ced",
+		"name": "Google Maps API Rahul Shetty Academy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add Location",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Из ответа получаем значение place_id и передаем ее в переменную окружения.\r",
+							"//var jsonData = JSON.parse(responseBody);\r",
+							"//pm.environment.set(\"place_id\", jsonData[\"place_id\"]);\r",
+							"try {\r",
+							"    // сохраняем userId из json ответа в переменную окружения\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"place_id\", jsonData[\"place_id\"]);\r",
+							"} catch(e) {\r",
+							"    // выводим исключение в консоль\r",
+							"    console.log(e);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"location\": {\r\n    \"lat\": -38.383494,\r\n    \"lng\": 33.427362\r\n  },\r\n  \"accuracy\": 50,\r\n  \"name\": \"Frontline house\",\r\n  \"phone_number\": \"(+91) 983 893 3937\",\r\n  \"address\": \"29, side layout, cohen 09\",\r\n  \"types\": [\r\n    \"shoe park\",\r\n    \"shop\"\r\n  ],\r\n  \"website\": \"http://google.com\",\r\n  \"language\": \"French-IN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}{{add_location_resource}}{{key}}",
+					"host": [
+						"{{base_url}}{{add_location_resource}}{{key}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Location",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}{{get_location_resource}}{{key}}&place_id={{place_id}}",
+					"host": [
+						"{{base_url}}{{get_location_resource}}{{key}}&place_id={{place_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Location",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"place_id\": \"{{place_id}}\",\r\n  \"address\":\"Moscow, RU\",\r\n  \"key\":\"qaclick123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}{{update_location_resource}}{{key}}",
+					"host": [
+						"{{base_url}}{{update_location_resource}}{{key}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Location",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"place_id\":\"{{place_id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}{{remove_location_resource}}{{key}}",
+					"host": [
+						"{{base_url}}{{remove_location_resource}}{{key}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status is ok, response is json\", function () {",
+					"    pm.response.to.be.ok;",
+					"    pm.response.to.be.json;",
+					"});"
+				]
+			}
+		}
+	]
+}
